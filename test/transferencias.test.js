@@ -1,20 +1,13 @@
 import request from 'supertest';
 import { expect } from 'chai';
+import getToken from '../helpers/authentication.js';
 import 'dotenv/config';
 
 describe('Transferencias', () => {
   describe('POST /transferencias', () => {
     it('Should return status 201 when the transfer value is equal or greater than R$10,00', async () => {
       // Get token
-      const responseLogin = await request(process.env.BASE_URL)
-        .post('/login')
-        .set('Content-Type', 'application/json')
-        .send({
-          'username': 'julio.lima',
-          'senha': '123456'
-        });
-      
-      const token = responseLogin.body.token;
+      const token = await getToken('julio.lima', '123456');
 
       const response = await request(process.env.BASE_URL)
         .post('/transferencias')
@@ -32,15 +25,7 @@ describe('Transferencias', () => {
 
     it('Should return status 422 when the transfer value is below R$10,00', async () => {
       // Get token
-      const responseLogin = await request(process.env.BASE_URL)
-        .post('/login')
-        .set('Content-Type', 'application/json')
-        .send({
-          'username': 'julio.lima',
-          'senha': '123456'
-        });
-      
-      const token = responseLogin.body.token;
+      const token = await getToken('julio.lima', '123456');
 
       const response = await request(process.env.BASE_URL)
         .post('/transferencias')
