@@ -1,11 +1,11 @@
 import request from 'supertest';
 import { expect } from 'chai';
-const BASEURL = 'http://localhost:3000';
+const BASE_URL = 'http://localhost:3000';
 
 describe('Login', () => {
   describe('POST /login', () =>{
     it('Should return status 200 with a string token when inserting valid credentials', async () => {
-      const response = await request(BASEURL)
+      const response = await request(BASE_URL)
         .post('/login')
         .set('Content-Type', 'application/json')
         .send({
