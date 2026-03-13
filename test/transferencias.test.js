@@ -5,10 +5,13 @@ import 'dotenv/config';
 
 describe('Transferencias', () => {
   describe('POST /transferencias', () => {
-    it('Should return status 201 when the transfer value is equal or greater than R$10,00', async () => {
-      // Get token
-      const token = await getToken('julio.lima', '123456');
+    let token;
+    
+    beforeEach(async () => {
+      token = await getToken('julio.lima', '123456');
+    });
 
+    it('Should return status 201 when the transfer value is equal or greater than R$10,00', async () => {
       const response = await request(process.env.BASE_URL)
         .post('/transferencias')
         .set('Content-Type', 'application/json')
@@ -24,9 +27,6 @@ describe('Transferencias', () => {
     });
 
     it('Should return status 422 when the transfer value is below R$10,00', async () => {
-      // Get token
-      const token = await getToken('julio.lima', '123456');
-
       const response = await request(process.env.BASE_URL)
         .post('/transferencias')
         .set('Content-Type', 'application/json')
