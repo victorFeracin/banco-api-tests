@@ -1,12 +1,12 @@
 import request from 'supertest';
 import { expect } from 'chai';
-const BASE_URL = 'http://localhost:3000';
+import 'dotenv/config';
 
 describe('Transferencias', () => {
   describe('POST /transferencias', () => {
     it('Should return status 201 when the transfer value is equal or greater than R$10,00', async () => {
       // Get token
-      const responseLogin = await request(BASE_URL)
+      const responseLogin = await request(process.env.BASE_URL)
         .post('/login')
         .set('Content-Type', 'application/json')
         .send({
@@ -16,7 +16,7 @@ describe('Transferencias', () => {
       
       const token = responseLogin.body.token;
 
-      const response = await request(BASE_URL)
+      const response = await request(process.env.BASE_URL)
         .post('/transferencias')
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
@@ -32,7 +32,7 @@ describe('Transferencias', () => {
 
     it('Should return status 422 when the transfer value is below R$10,00', async () => {
       // Get token
-      const responseLogin = await request(BASE_URL)
+      const responseLogin = await request(process.env.BASE_URL)
         .post('/login')
         .set('Content-Type', 'application/json')
         .send({
@@ -42,7 +42,7 @@ describe('Transferencias', () => {
       
       const token = responseLogin.body.token;
 
-      const response = await request(BASE_URL)
+      const response = await request(process.env.BASE_URL)
         .post('/transferencias')
         .set('Content-Type', 'application/json')
         .set('Authorization', `Bearer ${token}`)
